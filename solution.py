@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+from statsmodels.stats.proportion import proportions_ztest
 
 chat_id = 818742406 # Ваш chat ID, не меняйте название переменной
 
@@ -11,4 +11,7 @@ def solution(x_success: int,
     # Измените код этой функции
     # Это будет вашим решением
     # Не меняйте название функции и её аргументы
-    return (x_success / x_cnt) > (1.04 * y_success / y_cnt) # Ваш ответ, True или False
+    sales = np.array([x_success, y_success])
+    counts = np.array([x_cnt, y_cnt])
+    zstat, pvalue = proportions_ztest(sales, counts, alternative='smaller')
+    return pvalue < 0.04
